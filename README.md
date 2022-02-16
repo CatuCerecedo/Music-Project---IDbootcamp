@@ -10,3 +10,7 @@ Son pequeñas tareas llevadas a cabo por las alumnas del equipo B.
 
 Se solicita a los colaboradores que todos los scripts se suban en formato .py
 Tened cuidado con la información personal ya que es un repositorio público
+
+# Base de datos
+
+La base de datos original con la que se trabaja está incluida: ```data.zip```
