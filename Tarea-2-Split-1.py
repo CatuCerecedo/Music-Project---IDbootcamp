@@ -1,4 +1,4 @@
-# TAREA 2 - SPLIT 1 - Catuxa Cerecedo
+# TAREA 2 - SPLIT 1
 
 # Importar librerias
 import pandas as pd
