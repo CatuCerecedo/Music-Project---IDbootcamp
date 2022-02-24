@@ -37,6 +37,7 @@ def histogram_artist(df, feature, name=None, save=False):
     if name == None:
         df_artist=df
     else:
+        name = name.title()
         df_artist=df[df['artist_name'] == name]
 
     # Creamos multiples subplots en uno
