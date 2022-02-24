@@ -7,17 +7,32 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# Definimos la ruta de nuestro archivo .py
-path = os.path.dirname(os.path.abspath(__file__))
+# Función para buscar archivo en el directorio
+def searching_file(filename):
+    '''
+    Search the file in the directory and save the path
 
-# Importar la base de datos
-df = pd.read_csv(os.path.join(path, 'data_clean.csv'))
+    Arg:
+        filename(str): file name
+
+    Output:
+        str: path of file
+    '''
+    for root, dir, files in os.walk(os.path.dirname(os.path.abspath(__file__))):
+        if filename in files:
+            path=os.path.join(root, filename)
+    df=pd.read_csv(path)
+    return df
 
 # Definir la función para la hacer plot
-
-def histogram_artist(feature, name=None, save=False):
+def histogram_artist(df, feature, name=None, save=False):
     '''
     Plot de dos histogramas de un feature numérico de un artísta específico
+    input:
+        feauture (str): nombre de la audio feature que se quiere analizar
+        name (str): Optional. Nombre del artista.
+        save (boolean). If true, save the plot. Default False.
+    
     '''
     if name == None:
         df_artist=df
@@ -28,22 +43,21 @@ def histogram_artist(feature, name=None, save=False):
     fig, axes = plt.subplots(1,2, figsize=(15, 5))
     fig.suptitle('Histogramas')
 
-    x = df[feature]
-
     # Histograma de frecuencias
-    sns.histplot(x=df_artist.acousticness, stat="count", bins=10, edgecolor='black', ax=axes[0])
+    sns.histplot(x=df_artist[feature], stat="count", bins=10, edgecolor='black', ax=axes[0])
     axes[0].set_title('a) Frecuencias')
 
     # Histograma de densidades
-    sns.histplot(x=df_artist.acousticness, stat="density", bins=10, edgecolor='black', ax=axes[1])
+    sns.histplot(x=df_artist[feature], stat="density", bins=10, edgecolor='black', ax=axes[1])
     axes[1].set_title('b) Densidades de probabilidad')
 
     if save == False:
         pass
     else:
         plt.savefig('histograms.png', facecolor='white')
-    
-    return plt.show()
 
+    plt.show()
+    
 # Cirterio de aceptación
-histogram_artist('acousticness', 'Ed Sheeran', save=False)
+df=searching_file('data_clean.csv')
+histogram_artist(df, 'acousticness', 'Ed Sheeran', save=False)
